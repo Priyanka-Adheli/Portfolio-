@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Priyanka Adheli — SDE Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;0,800;1,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#060d09;
+  --bg2:#0b160e;
+  --bg3:#101e13;
+  --accent:#22c55e;
+  --accent2:#4ade80;
+  --accent3:#86efac;
+  --accent-dim:rgba(34,197,94,0.15);
+  --accent-glow:rgba(34,197,94,0.35);
+  --text:#e8f5ee;
+  --muted:#6b8f78;
+  --border:rgba(34,197,94,0.12);
+  --card:rgba(11,22,14,0.85);
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  font-size:16px;
+  line-height:1.7;
+  overflow-x:hidden;
+}
+
+/* Grid background */
+body::after{
+  content:'';
+  position:fixed;inset:0;
+  background-image:
+    linear-gradient(rgba(34,197,94,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34,197,94,0.03) 1px, transparent 1px);
+  background-size:48px 48px;
+  pointer-events:none;z-index:0;
+}
+
+/* Noise */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;
+}
+
+/* Orbs */
+.orb{position:fixed;border-radius:50%;filter:blur(90px);pointer-events:none;z-index:0;animation:float 10s ease-in-out infinite}
+.orb1{width:550px;height:550px;background:radial-gradient(circle,rgba(34,197,94,0.14),transparent 70%);top:-150px;right:-100px;animation-delay:0s}
+.orb2{width:400px;height:400px;background:radial-gradient(circle,rgba(74,222,128,0.09),transparent 70%);bottom:10%;left:-120px;animation-delay:-4s}
+.orb3{width:280px;height:280px;background:radial-gradient(circle,rgba(134,239,172,0.07),transparent 70%);top:55%;right:5%;animation-delay:-7s}
+@keyframes float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-28px) scale(1.04)}}
+
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--accent);border-radius:3px}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.1rem 2.5rem;
+  background:rgba(6,13,9,0.75);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  transition:padding 0.3s;
+}
+.nav-brand{
+  font-family:'JetBrains Mono',monospace;
+  font-weight:800;font-size:17px;
+  color:var(--accent);
+  letter-spacing:-0.02em;
+}
+.nav-brand span{color:var(--text);opacity:0.4}
+.nav-links{display:flex;gap:2rem}
+.nav-links a{
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;color:var(--muted);text-decoration:none;
+  letter-spacing:0.05em;transition:color 0.2s;position:relative;
+}
+.nav-links a::before{
+  content:'./';color:var(--accent);opacity:0;
+  transition:opacity 0.2s;font-size:11px;
+}
+.nav-links a:hover{color:var(--accent2)}
+.nav-links a:hover::before{opacity:1}
+
+/* SECTIONS */
+section{
+  position:relative;z-index:1;
+  max-width:980px;margin:0 auto;
+  padding:5.5rem 2rem;
+}
+
+/* HERO */
+#hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  justify-content:center;padding-top:7rem;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--accent-dim);border:1px solid var(--border);
+  border-radius:4px;padding:5px 14px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;color:var(--accent3);letter-spacing:0.06em;
+  margin-bottom:2rem;
+  opacity:0;animation:fadeUp 0.7s 0.2s forwards;
+}
+.dot-live{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.75)}}
+
+h1.hero-title{
+  font-family:'JetBrains Mono',monospace;
+  font-size:clamp(36px,6vw,68px);
+  font-weight:800;line-height:1.08;
+  letter-spacing:-0.04em;
+  margin-bottom:1.5rem;
+  opacity:0;animation:fadeUp 0.7s 0.35s forwards;
+}
+.hero-title .hi{color:var(--muted);font-size:0.55em;font-weight:300;display:block;margin-bottom:0.3em;letter-spacing:0.02em}
+.hero-title .name{color:var(--text)}
+.hero-title .role{
+  color:var(--accent);
+  position:relative;
+}
+.hero-title .role::after{
+  content:'';position:absolute;bottom:-4px;left:0;right:0;
+  height:2px;background:var(--accent);
+  animation:lineGrow 0.8s 1.2s both;
+}
+@keyframes lineGrow{from{transform:scaleX(0);transform-origin:left}to{transform:scaleX(1);transform-origin:left}}
+
+.hero-sub{
+  font-size:15px;color:var(--muted);max-width:500px;line-height:1.8;
+  margin-bottom:2.5rem;font-weight:300;
+  opacity:0;animation:fadeUp 0.7s 0.5s forwards;
+}
+.hero-sub code{
+  font-family:'JetBrains Mono',monospace;font-size:12px;
+  background:var(--accent-dim);color:var(--accent2);
+  padding:1px 6px;border-radius:3px;border:1px solid var(--border);
+}
+
+.hero-ctas{
+  display:flex;gap:12px;flex-wrap:wrap;
+  opacity:0;animation:fadeUp 0.7s 0.65s forwards;
+}
+.btn-glow{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:11px 26px;border-radius:4px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;font-weight:500;letter-spacing:0.05em;
+  cursor:pointer;text-decoration:none;transition:all 0.3s;border:none;
+  background:var(--accent);color:#060d09;
+  box-shadow:0 0 24px var(--accent-glow);
+}
+.btn-glow:hover{box-shadow:0 0 48px var(--accent-glow),0 0 8px var(--accent);transform:translateY(-2px)}
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:11px 26px;border-radius:4px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;font-weight:500;letter-spacing:0.05em;
+  cursor:pointer;text-decoration:none;transition:all 0.3s;
+  background:transparent;color:var(--accent);
+  border:1px solid rgba(34,197,94,0.3);
+}
+.btn-ghost:hover{border-color:var(--accent);background:var(--accent-dim);transform:translateY(-2px)}
+
+/* TERMINAL WINDOW */
+.terminal{
+  margin-top:3.5rem;
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:8px;overflow:hidden;
+  opacity:0;animation:fadeUp 0.7s 0.85s forwards;
+}
+.terminal-bar{
+  display:flex;align-items:center;gap:8px;
+  padding:10px 16px;background:var(--bg2);
+  border-bottom:1px solid var(--border);
+}
+.t-dot{width:10px;height:10px;border-radius:50%}
+.t-dot.r{background:#ff5f57}.t-dot.y{background:#febc2e}.t-dot.g{background:#28c840}
+.terminal-title{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);margin-left:6px}
+.terminal-body{padding:1.25rem 1.5rem;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.9}
+.t-line{display:flex;gap:10px}
+.t-prompt{color:var(--accent);flex-shrink:0}
+.t-cmd{color:var(--text)}
+.t-out{color:var(--muted);padding-left:20px}
+.t-key{color:var(--accent2)}
+.t-val{color:var(--accent3)}
+.t-cursor-inline{display:inline-block;width:8px;height:13px;background:var(--accent);animation:blink 1s infinite;vertical-align:middle;margin-left:2px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* STATS */
+.stats-strip{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--border);
+  border:1px solid var(--border);border-radius:8px;overflow:hidden;
+  margin-top:3rem;
+  opacity:0;animation:fadeUp 0.7s 1s forwards;
+}
+.stat{background:var(--bg2);padding:1.5rem;text-align:center;transition:background 0.3s}
+.stat:hover{background:var(--bg3)}
+.stat-num{
+  font-family:'JetBrains Mono',monospace;
+  font-size:28px;font-weight:700;color:var(--accent);
+}
+.stat-label{font-size:11px;color:var(--muted);margin-top:5px;letter-spacing:0.05em;font-family:'JetBrains Mono',monospace}
+
+/* DIVIDER */
+.divider{
+  max-width:980px;margin:0 auto;
+  border:none;border-top:1px solid var(--border);
+  position:relative;z-index:1;
+}
+
+/* SECTION HEADERS */
+.sec-eyebrow{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;letter-spacing:0.12em;
+  color:var(--accent);font-weight:500;margin-bottom:0.6rem;
+  display:flex;align-items:center;gap:8px;
+}
+.sec-eyebrow::before{content:'##';margin-right:2px;opacity:0.5}
+.sec-title{
+  font-family:'JetBrains Mono',monospace;
+  font-size:clamp(26px,3.5vw,36px);font-weight:700;
+  margin-bottom:0.6rem;letter-spacing:-0.03em;color:var(--text);
+}
+.sec-sub{font-size:14px;color:var(--muted);margin-bottom:2.5rem;max-width:480px;line-height:1.75;font-weight:300}
+
+/* PROJECTS */
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.proj-card{
+  background:var(--card);border:1px solid var(--border);border-radius:8px;
+  padding:1.75rem;display:flex;flex-direction:column;gap:14px;
+  backdrop-filter:blur(12px);position:relative;overflow:hidden;
+  transition:transform 0.3s,border-color 0.3s,box-shadow 0.3s;
+}
+.proj-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+  opacity:0;transition:opacity 0.4s;
+}
+.proj-card:hover{transform:translateY(-6px);border-color:rgba(34,197,94,0.35);box-shadow:0 20px 60px rgba(34,197,94,0.1)}
+.proj-card:hover::before{opacity:1}
+.proj-top{display:flex;align-items:flex-start;justify-content:space-between}
+.proj-icon{
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  background:var(--accent-dim);border:1px solid var(--border);
+  color:var(--accent);padding:4px 10px;border-radius:4px;
+  letter-spacing:0.05em;
+}
+.proj-ext{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;color:var(--muted);text-decoration:none;
+  border:1px solid var(--border);border-radius:4px;padding:4px 10px;
+  transition:all 0.2s;letter-spacing:0.04em;
+}
+.proj-ext:hover{color:var(--accent);border-color:rgba(34,197,94,0.4)}
+.proj-name{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;color:var(--text);letter-spacing:-0.02em}
+.proj-desc{font-size:13px;color:var(--muted);line-height:1.7;font-weight:300}
+.proj-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto}
+.tag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;padding:3px 8px;border-radius:3px;letter-spacing:0.04em;
+  background:rgba(34,197,94,0.06);color:var(--accent3);
+  border:1px solid rgba(34,197,94,0.15);
+}
+
+/* SKILLS */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.skill-card{
+  background:var(--card);border:1px solid var(--border);border-radius:8px;
+  padding:1.25rem;backdrop-filter:blur(12px);
+  transition:border-color 0.3s,transform 0.3s;
+}
+.skill-card:hover{border-color:rgba(34,197,94,0.3);transform:translateY(-3px)}
+.skill-cat{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;letter-spacing:0.1em;
+  color:var(--accent);font-weight:500;margin-bottom:14px;
+}
+.skill-items{display:flex;flex-direction:column;gap:8px}
+.skill-item{
+  font-size:12px;color:var(--muted);display:flex;align-items:center;gap:8px;
+  transition:color 0.2s;font-family:'JetBrains Mono',monospace;
+}
+.skill-card:hover .skill-item{color:var(--text)}
+.skill-arrow{color:var(--accent);font-size:10px;flex-shrink:0}
+
+/* EDUCATION */
+.edu-timeline{display:flex;flex-direction:column;gap:14px}
+.edu-card{
+  background:var(--card);border:1px solid var(--border);border-radius:8px;
+  padding:1.75rem;backdrop-filter:blur(12px);
+  display:grid;grid-template-columns:auto 1fr;gap:1.25rem;align-items:start;
+  transition:border-color 0.3s;
+}
+.edu-card:hover{border-color:rgba(34,197,94,0.3)}
+.edu-icon{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  background:var(--accent-dim);border:1px solid var(--border);
+  color:var(--accent);padding:6px 8px;border-radius:4px;
+  letter-spacing:0.05em;white-space:nowrap;
+}
+.edu-deg{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700;margin-bottom:4px;letter-spacing:-0.02em}
+.edu-school{font-size:13px;color:var(--muted);font-weight:300}
+.edu-meta{display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap}
+.edu-year{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)}
+.gpa-badge{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;font-weight:500;padding:3px 10px;border-radius:3px;
+  background:rgba(34,197,94,0.1);color:var(--accent2);
+  border:1px solid rgba(34,197,94,0.25);
+}
+
+/* AWARDS */
+.awards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.award-card{
+  background:var(--card);border:1px solid rgba(250,204,21,0.15);border-radius:8px;
+  padding:1.5rem;backdrop-filter:blur(12px);
+  display:flex;gap:14px;align-items:flex-start;
+  transition:border-color 0.3s,transform 0.3s;
+}
+.award-card:hover{border-color:rgba(250,204,21,0.35);transform:translateY(-3px)}
+.award-num{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  background:rgba(250,204,21,0.08);border:1px solid rgba(250,204,21,0.2);
+  color:#fde047;padding:5px 8px;border-radius:4px;white-space:nowrap;flex-shrink:0;
+}
+.award-title{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;margin-bottom:5px;letter-spacing:-0.01em}
+.award-desc{font-size:12px;color:var(--muted);line-height:1.65;font-weight:300}
+
+/* CONTACT */
+#contact{text-align:center}
+#contact .sec-eyebrow{justify-content:center}
+#contact .sec-eyebrow::before{display:none}
+.contact-email{
+  font-family:'JetBrains Mono',monospace;
+  font-size:clamp(18px,3vw,28px);font-weight:700;
+  color:var(--accent);letter-spacing:-0.02em;
+  text-decoration:none;display:inline-block;margin:1rem 0 2.5rem;
+  position:relative;
+}
+.contact-email::after{
+  content:'';position:absolute;bottom:-3px;left:0;right:0;height:1px;
+  background:var(--accent);transform:scaleX(0);transform-origin:right;
+  transition:transform 0.4s;
+}
+.contact-email:hover::after{transform:scaleX(1);transform-origin:left}
+.contact-links{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.contact-link{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--card);border:1px solid var(--border);border-radius:6px;
+  padding:12px 20px;font-family:'JetBrains Mono',monospace;
+  font-size:12px;color:var(--text);text-decoration:none;letter-spacing:0.04em;
+  backdrop-filter:blur(12px);transition:all 0.3s;
+}
+.contact-link:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-3px);box-shadow:0 8px 24px rgba(34,197,94,0.15)}
+.contact-link svg{width:16px;height:16px;fill:currentColor;flex-shrink:0}
+
+footer{
+  position:relative;z-index:1;
+  text-align:center;padding:2rem;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;color:var(--muted);letter-spacing:0.06em;
+}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.65s,transform 0.65s}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:0.1s}
+.reveal-delay-2{transition-delay:0.2s}
+.reveal-delay-3{transition-delay:0.3s}
+.reveal-delay-4{transition-delay:0.4s}
+
+@media(max-width:640px){
+  nav{padding:0.9rem 1.25rem}
+  .nav-links{display:none}
+  .stats-strip{grid-template-columns:repeat(2,1fr)}
+  section{padding:4rem 1.25rem}
+  .terminal{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+
+<nav>
+  <div class="nav-brand">priyanka<span>.</span>dev</div>
+  <div class="nav-links">
+    <a href="#about">about</a>
+    <a href="#projects">projects</a>
+    <a href="#skills">skills</a>
+    <a href="#education">education</a>
+    <a href="#contact">contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="about">
+  <div class="hero-badge">
+    <span class="dot-live"></span>
+    &gt; open_to_work :: SDE roles @ MNCs
+  </div>
+  <h1 class="hero-title">
+    <span class="hi">// hi there, I'm</span>
+    <span class="name">Priyanka Adheli.<br></span>
+    <span class="role">Full-Stack Dev.</span>
+  </h1>
+  <p class="hero-sub">
+    I build scalable, AI-powered web apps with <code>React</code>, <code>Node.js</code>, and <code>MongoDB</code>.
+    Solved <code>500+</code> LeetCode problems. Passionate about clean architecture, system design, and shipping things that matter.
+  </p>
+  <div class="hero-ctas">
+    <a href="#projects" class="btn-glow">$ view_projects →</a>
+    <a href="mailto:priyankaadheli5@gmail.com" class="btn-ghost">$ contact_me</a>
+  </div>
+
+  <div class="terminal">
+    <div class="terminal-bar">
+      <span class="t-dot r"></span><span class="t-dot y"></span><span class="t-dot g"></span>
+      <span class="terminal-title">priyanka@portfolio ~ </span>
+    </div>
+    <div class="terminal-body">
+      <div class="t-line"><span class="t-prompt">❯</span><span class="t-cmd">cat about.json</span></div>
+      <div class="t-out">{</div>
+      <div class="t-out">&nbsp;&nbsp;<span class="t-key">"name"</span>: <span class="t-val">"Priyanka Adheli"</span>,</div>
+      <div class="t-out">&nbsp;&nbsp;<span class="t-key">"role"</span>: <span class="t-val">"Full-Stack SDE"</span>,</div>
+      <div class="t-out">&nbsp;&nbsp;<span class="t-key">"location"</span>: <span class="t-val">"Solapur, Maharashtra"</span>,</div>
+      <div class="t-out">&nbsp;&nbsp;<span class="t-key">"stack"</span>: <span class="t-val">["React", "Node.js", "MongoDB", "Redis", "AI APIs"]</span>,</div>
+      <div class="t-out">&nbsp;&nbsp;<span class="t-key">"leetcode"</span>: <span class="t-val">"500+ solved"</span>,</div>
+      <div class="t-out">&nbsp;&nbsp;<span class="t-key">"status"</span>: <span class="t-val">"open_to_work ✓"</span></div>
+      <div class="t-out">}</div>
+      <div class="t-line" style="margin-top:8px"><span class="t-prompt">❯</span><span class="t-cursor-inline"></span></div>
+    </div>
+  </div>
+
+  <div class="stats-strip">
+    <div class="stat"><div class="stat-num" data-count="3">0</div><div class="stat-label">projects_shipped</div></div>
+    <div class="stat"><div class="stat-num" data-count="500" data-suffix="+">0</div><div class="stat-label">leetcode_solved</div></div>
+    <div class="stat"><div class="stat-num" data-count="984" data-decimal="true">0</div><div class="stat-label">bca_gpa</div></div>
+    <div class="stat"><div class="stat-num" data-count="2">0</div><div class="stat-label">hackathon_wins</div></div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="sec-eyebrow reveal">projects</div>
+  <div class="sec-title reveal reveal-delay-1">Things I've built.</div>
+  <div class="sec-sub reveal reveal-delay-2">Production-grade applications with AI integrations, real-time features, and optimised backends.</div>
+
+  <div class="projects-grid">
+    <div class="proj-card reveal reveal-delay-1">
+      <div class="proj-top">
+        <div class="proj-icon">v1.0 · ai</div>
+        <a href="https://auto-profile-two.vercel.app/" target="_blank" class="proj-ext">↗ live</a>
+      </div>
+      <div class="proj-name">AutoProfile</div>
+      <div class="proj-desc">AI-powered resume builder with 4 templates, real-time preview, OpenAI-enhanced summaries, and intelligent PDF parsing to auto-populate fields. Reduces editing time by 60%.</div>
+      <div class="proj-tags">
+        <span class="tag">ReactJS</span><span class="tag">NodeJS</span><span class="tag">MongoDB</span><span class="tag">Redis</span><span class="tag">OpenAI API</span><span class="tag">JWT</span>
+      </div>
+    </div>
+
+    <div class="proj-card reveal reveal-delay-2">
+      <div class="proj-top">
+        <div class="proj-icon">v2.0 · ai</div>
+        <a href="https://code-flow-frontend.vercel.app/" target="_blank" class="proj-ext">↗ live</a>
+      </div>
+      <div class="proj-name">CodeFlow</div>
+      <div class="proj-desc">AI-driven coding platform with DSA visualizer, real-time AI interview simulator, Big-O complexity analyzer, and 30+ auto-tested challenges. 30% faster APIs via Redis caching.</div>
+      <div class="proj-tags">
+        <span class="tag">ReactJS</span><span class="tag">Gemini AI</span><span class="tag">ExpressJS</span><span class="tag">Redis</span><span class="tag">MongoDB</span>
+      </div>
+    </div>
+
+    <div class="proj-card reveal reveal-delay-3">
+      <div class="proj-top">
+        <div class="proj-icon">v1.2 · oss</div>
+        <a href="https://dsa-wow.vercel.app/" target="_blank" class="proj-ext">↗ live</a>
+      </div>
+      <div class="proj-name">DSA View</div>
+      <div class="proj-desc">Interactive algorithm visualizer for 6+ DSA concepts — sorting, stacks, queues, linked lists — with step-by-step animations and real-time Big-O indicators. 40% smoother rendering.</div>
+      <div class="proj-tags">
+        <span class="tag">ReactJS</span><span class="tag">Framer Motion</span><span class="tag">Context API</span><span class="tag">Tailwind CSS</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="sec-eyebrow reveal">skills</div>
+  <div class="sec-title reveal reveal-delay-1">My toolkit.</div>
+  <div class="sec-sub reveal reveal-delay-2">Full-stack proficiency built on strong CS fundamentals.</div>
+
+  <div class="skills-grid">
+    <div class="skill-card reveal reveal-delay-1">
+      <div class="skill-cat">// languages</div>
+      <div class="skill-items">
+        <div class="skill-item"><span class="skill-arrow">→</span>C++ (DSA)</div>
+        <div class="skill-item"><span class="skill-arrow">→</span>JavaScript / TypeScript</div>
+        <div class="skill-item"><span class="skill-arrow">→</span>Java</div>
+        <div class="skill-item"><span class="skill-arrow">→</span>Python</div>
+      </div>
+    </div>
+    <div class="skill-card reveal reveal-delay-2">
+      <div class="skill-cat">// frontend</div>
+      <div class="skill-items">
+        <div class="skill-item"><span class="skill-arrow">→</span>ReactJS, Vite</div>
+        <div class="skill-item"><span class="skill-arrow">→</span>Tailwind CSS, daisyUI</div>
+        <div class="skill-item"><span class="skill-arrow">→</span>Framer Motion</div>
+        <div class="skill-item"><span class="skill-arrow">→</span>Context API, Hooks</div>
+      </div>
+    </div>
+    <div class="skill-card reveal reveal-delay-3">
+      <div class="skill-cat">// backend</div>
+      <div class="skill-items">
+        <div class="skill-item"><span class="skill-arrow">→</span>NodeJS, ExpressJS</div>
+        <div class="skill-item"><span class="skill-arrow">→</span>REST APIs, Microservices</div>
+        <div class="skill-item"><span class="skill-arrow">→</span>JWT Auth, Redis</div>
+        <div class="skill-item"><span class="skill-arrow">→</span>Cron Jobs</div>
+      </div>
+    </div>
+    <div class="skill-card reveal reveal-delay-4">
+      <div class="skill-cat">// ai & data</div>
+      <div class="skill-items">
+        <div class="skill-item"><span class="skill-arrow">→</span>OpenAI GPT API</div>
+        <div class="skill-item"><span class="skill-arrow">→</span>Google Gemini API</div>
+        <div class="skill-item"><span class="skill-arrow">→</span>MongoDB, MySQL</div>
+        <div class="skill-item"><span class="skill-arrow">→</span>Prompt Engineering</div>
+      </div>
+    </div>
+    <div class="skill-card reveal reveal-delay-1">
+      <div class="skill-cat">// tools</div>
+      <div class="skill-items">
+        <div class="skill-item"><span class="skill-arrow">→</span>Git / GitHub</div>
+        <div class="skill-item"><span class="skill-arrow">→</span>Postman, VS Code</div>
+        <div class="skill-item"><span class="skill-arrow">→</span>Vercel</div>
+        <div class="skill-item"><span class="skill-arrow">→</span>Linux / Bash</div>
+      </div>
+    </div>
+    <div class="skill-card reveal reveal-delay-2">
+      <div class="skill-cat">// cs core</div>
+      <div class="skill-items">
+        <div class="skill-item"><span class="skill-arrow">→</span>DSA</div>
+        <div class="skill-item"><span class="skill-arrow">→</span>OOP, DBMS, OS</div>
+        <div class="skill-item"><span class="skill-arrow">→</span>Computer Networks</div>
+        <div class="skill-item"><span class="skill-arrow">→</span>System Design</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="sec-eyebrow reveal">education</div>
+  <div class="sec-title reveal reveal-delay-1">Academic background.</div>
+  <div class="sec-sub reveal reveal-delay-2">Computer science and data science foundation.</div>
+
+  <div class="edu-timeline">
+    <div class="edu-card reveal reveal-delay-1">
+      <div class="edu-icon">MCA<br/>2027</div>
+      <div>
+        <div class="edu-deg">Master of Computer Applications</div>
+        <div class="edu-school">MIT Vishwaprayag University, Solapur &nbsp;·&nbsp; Data Science Specialization</div>
+        <div class="edu-meta">
+          <span class="edu-year">Aug 2025 — Sept 2027</span>
+        </div>
+      </div>
+    </div>
+    <div class="edu-card reveal reveal-delay-2">
+      <div class="edu-icon">BCA<br/>2025</div>
+      <div>
+        <div class="edu-deg">Bachelor of Computer Applications</div>
+        <div class="edu-school">Punyashlok Ahilyadevi Holkar University, Solapur</div>
+        <div class="edu-meta">
+          <span class="edu-year">Aug 2022 — May 2025</span>
+          <span class="gpa-badge">GPA :: 9.84 / 10.00</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-title reveal" style="font-size:22px;margin-top:3.5rem;margin-bottom:1.5rem">Awards &amp; achievements.</div>
+  <div class="awards-grid">
+    <div class="award-card reveal reveal-delay-1">
+      <div class="award-num">#2 / 600+</div>
+      <div>
+        <div class="award-title">Code-a-thon 2025</div>
+        <div class="award-desc">Top 0.3% among 600+ participants · Algorithmic problem-solving under time constraints.</div>
+      </div>
+    </div>
+    <div class="award-card reveal reveal-delay-2">
+      <div class="award-num">#2 / 300+</div>
+      <div>
+        <div class="award-title">Code-a-thon 2024</div>
+        <div class="award-desc">Top 1% among 300+ participants · Recognised for code quality and optimised algorithms.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="sec-eyebrow reveal">contact</div>
+  <div class="sec-title reveal reveal-delay-1">Let's connect.</div>
+  <p class="sec-sub reveal reveal-delay-2" style="margin:0 auto 0;text-align:center">Open to SDE roles at MNCs. Always happy to chat about tech, projects, or opportunities.</p>
+  <a href="mailto:priyankaadheli5@gmail.com" class="contact-email reveal reveal-delay-2">priyankaadheli5@gmail.com</a>
+  <div class="contact-links reveal reveal-delay-3">
+    <a href="https://www.linkedin.com/in/priyanka-adheli-04258232b/" target="_blank" class="contact-link">
+      <svg viewBox="0 0 24 24"><path d="M19 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2zM9 17H6.5v-7H9v7zm-1.25-8a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zM18 17h-2.5v-3.5c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5V17H10v-7h2.5v1.1A3.5 3.5 0 0118 14v3z"/></svg>
+      linkedin
+    </a>
+    <a href="https://github.com/Priyanka-Adheli" target="_blank" class="contact-link">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.604-3.369-1.341-3.369-1.341-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836a9.59 9.59 0 012.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+      github
+    </a>
+    <a href="https://leetcode.com/u/priyankaadheli12/" target="_blank" class="contact-link">
+      <svg viewBox="0 0 24 24"><path d="M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.209 2.104 5.35 5.35 0 0 0-.125.513 5.527 5.527 0 0 0 .062 2.362 5.83 5.83 0 0 0 .349 1.017 5.938 5.938 0 0 0 1.271 1.818l4.277 4.193.039.038c2.248 2.165 5.852 2.133 8.063-.074l2.396-2.392c.54-.54.54-1.414.003-1.955a1.378 1.378 0 0 0-1.951-.003l-2.396 2.392a3.021 3.021 0 0 1-4.205.038l-.02-.019-4.276-4.193c-.652-.64-.972-1.469-.948-2.263a2.68 2.68 0 0 1 .066-.523 2.545 2.545 0 0 1 .619-1.164L9.13 8.114c1.058-1.134 3.204-1.27 4.43-.278l3.501 2.831c.593.48 1.461.387 1.94-.207a1.384 1.384 0 0 0-.207-1.943l-3.5-2.831c-.8-.647-1.766-1.045-2.774-1.202l2.015-2.158A1.384 1.384 0 0 0 13.483 0zm-2.866 12.815a1.38 1.38 0 0 0-1.38 1.382 1.38 1.38 0 0 0 1.38 1.382H20.79a1.38 1.38 0 0 0 1.38-1.382 1.38 1.38 0 0 0-1.38-1.382z"/></svg>
+      leetcode
+    </a>
+  </div>
+</section>
+
+<footer>// designed &amp; built by priyanka_adheli · 2025</footer>
+
+<script>
+// Count-up
+function countUp(el, target, isDecimal, suffix) {
+  let duration = 1400, step = 16, steps = duration / step;
+  let inc = target / steps, current = 0;
+  const timer = setInterval(() => {
+    current += inc;
+    if (current >= target) { current = target; clearInterval(timer); }
+    el.textContent = isDecimal
+      ? (current / 100).toFixed(2)
+      : Math.floor(current) + (suffix || '');
+  }, step);
+}
+
+// Intersection observer
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// Stats count-up
+const io2 = new IntersectionObserver(([e]) => {
+  if (e.isIntersecting) {
+    e.target.querySelectorAll('[data-count]').forEach(n => {
+      if (!n.dataset.counted) {
+        n.dataset.counted = true;
+        countUp(n, parseInt(n.dataset.count), n.dataset.decimal === 'true', n.dataset.suffix || '');
+      }
+    });
+    io2.unobserve(e.target);
+  }
+}, { threshold: 0.3 });
+const strip = document.querySelector('.stats-strip');
+if (strip) io2.observe(strip);
+
+// Nav shrink
+window.addEventListener('scroll', () => {
+  document.querySelector('nav').style.padding =
+    window.scrollY > 50 ? '0.65rem 2.5rem' : '1.1rem 2.5rem';
+});
+
+// Glitch effect on hero name on hover
+const name = document.querySelector('.hero-title .name');
+if (name) {
+  name.addEventListener('mouseenter', () => {
+    name.style.transition = 'none';
+    let i = 0;
+    const chars = '01アイウエオ{}[]<>/\\|';
+    const orig = 'Priyanka Adheli.';
+    const iv = setInterval(() => {
+      if (i++ > 8) { name.textContent = orig; clearInterval(iv); return; }
+      name.textContent = orig.split('').map((c, idx) =>
+        Math.random() < 0.25 ? chars[Math.floor(Math.random()*chars.length)] : c
+      ).join('');
+    }, 60);
+  });
+}
+</script>
+</body>
+</html>
